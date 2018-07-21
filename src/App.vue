@@ -1,8 +1,14 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="navbar">
+      <ul class="navbar-menu">
+        <li class="navbar-item">
+          <router-link class="navbar-item" to="/">Cadastrar Entregas</router-link>
+        </li>
+        <li class="navbar-item">
+          <router-link class="navbar-item" to="/register-invoice">Cadastrar Notas Fiscais </router-link>
+        </li>
+      </ul>
     </div>
     <router-view/>
   </div>

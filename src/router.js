@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import About from './views/About.vue'
+import PageTransportUnit from './views/PageRegisterTransportUnit.vue'
+import PageRegisterInvoice from './views/PageRegisterInvoice.vue'
 
 Vue.use(Router)
 
@@ -9,13 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'Cadastrar Entregas',
+      component: PageTransportUnit,
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About
+      path: '/register-invoice',
+      name: 'Cadastrar Nota Fiscal',
+      component: PageRegisterInvoice,
     }
   ]
 })
