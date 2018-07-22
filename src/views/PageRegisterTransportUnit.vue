@@ -8,6 +8,7 @@
         <b-field label="Dados do Pacote:">
           <b-input 
             type="textarea"
+            rows="10"
             v-model="transportUnitJSON" />
         </b-field>
 
@@ -48,9 +49,84 @@ import BcPageBase from '@/components/BcPageBase.vue'
 export default {
   name: 'PageRegisterTransportUnit',
   data() {
+
+    var sample={
+        "$class": "org.logistic.network.CreateTransportUnit",
+        "transporter": "Correios",
+        "insurance": "none",
+        "logistic_operator": "none",
+        "cte_xml_base64": "xml_content",
+        "cte_key": "none",
+        "mdfe_xml_base64": "xml_content",
+        "mdfe_key": "none",
+        "other": "Descrição do pedido",
+        "weight": 0,
+        "proof_of_theft_base64": "base64",
+        "destinator": {
+          "$class": "org.logistic.network.Address",
+          "first_name": "Carlos",
+          "last_name": "Francisco",
+          "email": "carlos.francisco@intelipost.com",
+          "phone": "",
+          "cellphone": "",
+          "is_company": "false",
+          "federal_tax_payer_id": "",
+          "country": "",
+          "state": "",
+          "city": "",
+          "address": "Av. Antártica",
+          "number": "",
+          "neighborhood": "",
+          "reference": "",
+          "additional": "",
+          "zip": ""
+        },
+        "dimensions": {
+          "$class": "org.logistic.network.Dimensions",
+          "L": 0,
+          "H": 0,
+          "W": 0
+        },
+        "proof_of_delivery": {
+          "$class": "org.logistic.network.ProofOfDelivery",
+          "url": "",
+          "proof_base64": "",
+          "name": "",
+          "rg": ""
+        },
+        "insurance_validation": {
+          "id": "",
+          "$class": "org.logistic.network.InsuranceValidation",
+          "receive_base64": ""
+        },
+        "collect_insurance_document": {
+          "$class": "org.logistic.network.CollectInsuranceDocument",
+          "document_base64": ""
+        },
+        "proof_of_insurance_contract": {
+          "$class": "org.logistic.network.ProofOfInsuranceContract",
+          "response": true,
+          "message": ""
+        },
+        "insurance_claim_approved": {
+          "$class": "org.logistic.network.InsuranceClaimApproved",
+          "response": true,
+          "message": ""
+        },
+        "status_detail": {
+          "$class": "org.logistic.network.StatusDetail",
+          "event_date": "",
+          "transporter_code": "",
+          "transporter_message": "",
+          "latitude": "",
+          "longitude": ""
+        }
+      };
+    sample = JSON.stringify(sample, null, 4);
+
     return {
       isLoading: false,
-      transportUnitJSON: null,
+      transportUnitJSON: sample,
       responseJSON: null,
     };
   },
