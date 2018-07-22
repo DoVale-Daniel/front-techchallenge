@@ -9,17 +9,12 @@
                 <div class="card-content">
                     <div class="media">
                         <div class="media-content">
-                            <p class="title is-4">John Smith</p>
-                            <p class="subtitle is-6">@johnsmith</p>
+                            <p class="title is-12">Detalhes</p>
                         </div>
                     </div>
 
                     <div class="content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                        <a>#css</a> <a>#responsive</a>
-                        <br>
-                        <small>11:09 PM - 1 Jan 2016</small>
+                        {{ this.details}}
                     </div>
                 </div>
             </div>
@@ -39,7 +34,8 @@ export default {
     return {
       isImageModalActive: false,
       isCardModalActive: false,
-      isLoading: false
+      isLoading: false,
+      details: {}
     };
   },
   methods: {
@@ -50,7 +46,8 @@ export default {
         .get(`http://129.213.89.112:3000/api/TransportUnit/${this.id}`)
         .then(res => {
           if (res.status === 200) {
-            console.log(res);
+            this.details = res.data;
+            console.log(this.details);
 
             this.isLoading = false;
           }
