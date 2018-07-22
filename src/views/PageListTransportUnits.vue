@@ -28,15 +28,19 @@
         :loading="isLoading">
 
         <template slot-scope="props">
-          <b-table-column field="id" label="ID" width="40" numeric>
+          <b-table-column field="id" label="ID" width="40" sortable numeric>
             {{ props.row.id }}
           </b-table-column>
 
-          <b-table-column field="current_owner" label="Status">
+          <b-table-column field="currentOwner" label="Current Owner">
+            {{ props.row.currentOwner | currentOwnerFilter}}
+          </b-table-column>
+
+          <b-table-column field="status" label="Status">
             {{ props.row.status }}
           </b-table-column>
 
-          <b-table-column field="insurance" label="Data de criação">
+          <b-table-column field="createDate" label="Data de criação">
             {{ props.row.created | date}}
           </b-table-column>
 
@@ -80,17 +84,22 @@ export default {
     sendTransportUnit() {
       this.isLoading = true;
 
-      axios.get('http://129.213.89.112:3000/api/CreateTransportUnit')
+      axios.get('http://10.100.22.118:8080/transportUnit')
         .then(res => {
           if (res.status === 200) {
             console.log(res);
 
+            res.data = res.data.sort(function(a, b) {
+                var x = a['id']; var y = b['id'];
+                return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+            });
+
             this.data = res.data.map(item => {
               return {
                 id: item.id,
-                insurance: item.insurance,
                 status: item.status,
-                created: item.timestamp
+                created: item.timestamp,
+                currentOwner: item.current_owner
               };
             });
 
@@ -123,7 +132,12 @@ export default {
       if (!date) return "";
       date = moment(date).format('DD/MM/YYYY HH:mm');
       return date;
-    }
+    },
+    currentOwnerFilter: (owner) => {
+      if (!owner) return "";
+      owner = owner.split("#")[1];
+      return owner;
+    } 
   }
 };
 </script>
