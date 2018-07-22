@@ -24,13 +24,12 @@
         </b-field>
 
         <b-field>
-          <div id="demo"></div>
-        </b-field>
-
+            <div id="demo"></div>
+          </b-field>
         <b-field 
           v-if="!!responseJSON"
-          label="Resposta">
-          <b-field label="Dados do Pacote:">
+          label="Resposta">          
+          <b-field label="Dados do Pacote:">            
             <b-input 
               type="textarea"
               v-model="responseJSON" 
@@ -135,12 +134,7 @@ export default {
     };
   },
   methods: {
-    sendTransportUnit() {
-
-        $("#demo").barcode(
-            "ip153227303464813a8cf16", // Value barcode (dependent on the type of barcode)
-            "code128" // type (string)
-        );
+    sendTransportUnit() {       
 
         this.isLoading = true;
 
@@ -154,6 +148,11 @@ export default {
               type: 'is-success',
               position: 'is-bottom',
             });
+
+            $("#demo").barcode(
+                res.data.id, // Value barcode (dependent on the type of barcode)
+                "code128" // type (string)
+            );
 
             const {
               transport_unit,
