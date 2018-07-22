@@ -43,15 +43,16 @@
             {{ props.row.status }}
           </b-table-column>
 
-          <b-table-column field="createDate" label="Data de criação">
-            {{ props.row.created | date}}
+          <b-table-column field="nfeKey" label="NFE">
+            {{ props.row.nfe_key}}
           </b-table-column>
 
           <b-table-column field="actions" label="Ações">
-            <bc-modal
-              :label="'Gerar NF'"
-              :id="props.row.id">
-            </bc-modal>
+            <button class="button is-success"
+                @click="sendInvoice(props.row.id);">
+                Gerar NF
+            </button>
+          
           </b-table-column>
 
         </template>
@@ -82,7 +83,6 @@ import moment from "moment";
 
 import BcField from "@/components/BcField.vue";
 import BcPageBase from "@/components/BcPageBase.vue";
-import BcModal from "@/components/BcModal.vue";
 
 export default {
   name: "PageRegisterTransportUnit",
@@ -102,15 +102,16 @@ export default {
     sendTransportUnit() {
       this.isLoading = true;
 
-
-      axios.get('http://10.100.22.118:8080/transportUnit')
+      axios
+        .get("http://10.100.22.118:8080/transportUnit")
         .then(res => {
           if (res.status === 200) {
             console.log(res);
 
             res.data = res.data.sort(function(a, b) {
-                var x = a['id']; var y = b['id'];
-                return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+              var x = a["id"];
+              var y = b["id"];
+              return x < y ? 1 : x > y ? -1 : 0;
             });
 
             this.data = res.data.map(item => {
@@ -118,6 +119,7 @@ export default {
                 id: item.id,
                 status: item.status,
                 created: item.timestamp,
+                nfe_key: item.nfe_key,
                 destinator: item.destinator,
                 dimensions: item.dimensions,
                 currentOwner: item.current_owner
@@ -138,6 +140,46 @@ export default {
 
           this.isLoading = false;
         });
+    },
+    sendInvoice(id) {
+      this.isLoading = true;
+      const invoiceJSON = {
+        "nfe_xml_base64": "PD9waHAKcGhwaW5mbygpOwo=",
+        "nfe_key": "abcIntelipost1"
+      }
+      axios
+        .post(
+          "http://10.100.22.118:8080/transportUnit/" +
+            id +
+            "/invoice",
+          invoiceJSON
+        )
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res);
+
+            this.$toast.open({
+              message: "Nota fiscal inserida com sucesso!",
+              type: "is-success",
+              position: "is-bottom"
+            });
+
+            // this.responseJSONF = JSON.stringify(res.data);
+            this.sendTransportUnit();
+            this.isLoading = false;
+          }
+        })
+        .catch(e => {
+          console.log(e);
+
+          this.$toast.open({
+            message: "Não foi possivel inserir a nota fiscal.",
+            type: "is-danger",
+            position: "is-bottom"
+          });
+
+          this.isLoading = false;
+        });
     }
   },
   created() {
@@ -145,8 +187,7 @@ export default {
   },
   components: {
     BcField,
-    BcPageBase,
-    BcModal
+    BcPageBase
   },
   filters: {
     date: date => {
@@ -154,11 +195,11 @@ export default {
       date = moment(date).format("DD/MM/YYYY HH:mm");
       return date;
     },
-    currentOwnerFilter: (owner) => {
+    currentOwnerFilter: owner => {
       if (!owner) return "";
       owner = owner.split("#")[1];
       return owner;
-    } 
+    }
   }
 };
 </script>
