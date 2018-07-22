@@ -1,6 +1,6 @@
 <template>
 <section>
-  <button class="button is-primary"
+  <button class="button is-success"
             @click="isCardModalActive = true; getDetail();">
             {{label}}
   </button>

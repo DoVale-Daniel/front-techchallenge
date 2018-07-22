@@ -1,6 +1,5 @@
 <template>
   <BcPageBase 
-    title="Lista de Pacotes"
     class="page page-home">
 
     <b-field grouped group-multiline>
@@ -25,7 +24,11 @@
         :pagination-simple="isPaginationSimple"
         :default-sort-direction="defaultSortDirection"
         default-sort="data.id"
-        :loading="isLoading">
+        :loading="isLoading"
+        :opened-detailed="defaultOpenedDetails"
+        detailed
+        detail-key="id"
+        >
 
         <template slot-scope="props">
           <b-table-column field="id" label="ID" width="40" numeric>
@@ -42,11 +45,26 @@
 
           <b-table-column field="actions" label="Ações">
             <bc-modal
-              :label="'Detalhes'"
+              :label="'Gerar NF'"
               :id="props.row.id">
             </bc-modal>
           </b-table-column>
 
+        </template>
+         <template slot="detail" slot-scope="props">
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <br>
+                            {{props.row.destinator}}
+                        </p>
+                        <p>
+                            {{props.row.dimensions}}
+                        </p>
+                    </div>
+                </div>
+            </article>
         </template>
       </b-table>
     </template>
@@ -72,7 +90,7 @@ export default {
       isPaginationSimple: false,
       defaultSortDirection: "asc",
       currentPage: 1,
-      perPage: 20,
+      perPage: 10,
       data: []
     };
   },
@@ -80,7 +98,8 @@ export default {
     sendTransportUnit() {
       this.isLoading = true;
 
-      axios.get('http://129.213.89.112:3000/api/CreateTransportUnit')
+      axios
+        .get("http://129.213.89.112:3000/api/CreateTransportUnit")
         .then(res => {
           if (res.status === 200) {
             console.log(res);
@@ -90,7 +109,9 @@ export default {
                 id: item.id,
                 insurance: item.insurance,
                 status: item.status,
-                created: item.timestamp
+                created: item.timestamp,
+                destinator: item.destinator,
+                dimensions: item.dimensions
               };
             });
 
@@ -101,9 +122,9 @@ export default {
           console.log(e);
 
           this.$toast.open({
-            message: 'Não foi possivel listar os Transport Units',
-            type: 'is-danger',
-            position: 'is-bottom',
+            message: "Não foi possivel listar os Transport Units",
+            type: "is-danger",
+            position: "is-bottom"
           });
 
           this.isLoading = false;
@@ -119,9 +140,9 @@ export default {
     BcModal
   },
   filters: {
-    date: (date) => {
+    date: date => {
       if (!date) return "";
-      date = moment(date).format('DD/MM/YYYY HH:mm');
+      date = moment(date).format("DD/MM/YYYY HH:mm");
       return date;
     }
   }
