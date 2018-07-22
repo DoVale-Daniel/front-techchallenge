@@ -22,6 +22,10 @@
           </p>
         </b-field>
 
+        <b-field>
+          <div id="demo"></div>
+        </b-field>
+
         <b-field 
           v-if="!!responseJSON"
           label="Resposta">
@@ -56,7 +60,13 @@ export default {
   },
   methods: {
     sendTransportUnit() {
-      this.isLoading = true;
+
+        $("#demo").barcode(
+            "ip153227303464813a8cf16", // Value barcode (dependent on the type of barcode)
+            "code128" // type (string)
+        );
+
+        this.isLoading = true;
 
       axios.post('http://10.100.22.118:8080/transportUnit', JSON.parse(this.transportUnitJSON))
         .then(res => {
