@@ -32,12 +32,12 @@
             {{ props.row.id }}
           </b-table-column>
 
-          <b-table-column field="current_owner" label="Current Owner">
-            {{ props.row.current_owner }}
+          <b-table-column field="current_owner" label="Status">
+            {{ props.row.status }}
           </b-table-column>
 
-          <b-table-column field="insurance" label="Seguro">
-            {{ props.row.insurance }}
+          <b-table-column field="insurance" label="Data de criação">
+            {{ props.row.created | date}}
           </b-table-column>
 
           <b-table-column field="actions" label="Ações">
@@ -52,30 +52,32 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import moment from "moment";
 
-import BcField from '@/components/BcField.vue'
-import BcPageBase from '@/components/BcPageBase.vue'
+import BcField from "@/components/BcField.vue";
+import BcPageBase from "@/components/BcPageBase.vue";
 
 export default {
-  name: 'PageRegisterTransportUnit',
+  name: "PageRegisterTransportUnit",
   data() {
     return {
       isLoading: false,
       transportUnitJSON: null,
       responseJSON: null,
       isPaginationSimple: false,
-      defaultSortDirection: 'asc',
+      defaultSortDirection: "asc",
       currentPage: 1,
       perPage: 20,
-      data: [],
+      data: []
     };
   },
   methods: {
     sendTransportUnit() {
       this.isLoading = true;
 
-      axios.get('http://129.213.89.112:3000/api/CreateTransportUnit')
+      axios
+        .get("http://129.213.89.112:3000/api/CreateTransportUnit")
         .then(res => {
           if (res.status === 200) {
             console.log(res);
@@ -83,33 +85,41 @@ export default {
             this.data = res.data.map(item => {
               return {
                 id: item.id,
-                current_owner: item.current_owner,
                 insurance: item.insurance,
+                status: item.status,
+                created: item.timestamp
               };
             });
 
             this.isLoading = false;
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
 
           this.$toast.open({
-            message: 'Não foi possivel cadastrar o seu pacote',
-            type: 'is-danger',
-            position: 'is-bottom',
+            message: "Não foi possivel cadastrar o seu pacote",
+            type: "is-danger",
+            position: "is-bottom"
           });
 
           this.isLoading = false;
         });
-    },
+    }
   },
   created() {
     this.sendTransportUnit();
   },
   components: {
     BcField,
-    BcPageBase,
+    BcPageBase
   },
+  filters: {
+    date: (date) => {
+      if (!date) return "";
+      date = moment(date).format('DD/MM/YYYY HH:mm');
+      return date;
+    }
+  }
 };
 </script>
