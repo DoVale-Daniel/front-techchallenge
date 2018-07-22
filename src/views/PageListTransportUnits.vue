@@ -72,7 +72,7 @@
                           Email: {{props.row.destinator.email}}
                       </p>
                       <p>
-                          Address: {{props.row.address}}
+                          Address: {{props.row.destinator.address}}
                       </p>      
                     </div>
                     <div class="column">
