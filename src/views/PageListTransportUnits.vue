@@ -58,14 +58,34 @@
          <template slot="detail" slot-scope="props">
             <article class="media">
                 <div class="media-content">
-                    <div class="content">
+                    <div class="columns">
+                      <div class="column">
+                      <b>Endereço</b>
+                      <p>
+                          First Name: {{props.row.destinator.first_name}}
+                      </p>
+                      <p>
+                          Last Name: {{props.row.destinator.last_name}}
+                      </p>
+                      <p>
+                          Email: {{props.row.destinator.email}}
+                      </p>
+                      <p>
+                          Address: {{props.row.address}}
+                      </p>      
+                    </div>
+                    <div class="column">
+                      <b>Dimensões</b>
                         <p>
-                            <br>
-                            {{props.row.destinator}}
+                            Height: {{props.row.dimensions.H}}
                         </p>
                         <p>
-                            {{props.row.dimensions}}
+                            Width: {{props.row.dimensions.W}}
                         </p>
+                        <p>
+                            Length: {{props.row.dimensions.L}}
+                        </p>
+                    </div>
                     </div>
                 </div>
             </article>
