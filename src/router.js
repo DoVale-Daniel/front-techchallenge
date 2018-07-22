@@ -14,11 +14,6 @@ export default new Router({
       component: PageListTransportUnits,
     },
     {
-      path: '/:id',
-      name: 'Lista de Entregas',
-      component: PageListTransportUnits,
-    },
-    {
       path: '/register-transport-unit',
       name: 'Cadastrar Entregas',
       component: PageRegisterTransportUnit,
