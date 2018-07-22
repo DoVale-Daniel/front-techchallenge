@@ -5,6 +5,11 @@
 
     <template slot="content">
       <form class="form">
+        <b-field label="Transport Unit Id:">
+          <b-input 
+            type="text"
+            v-model="transportUnitId" />
+        </b-field>
         <b-field label="Dados da NF:">
           <b-input 
             type="textarea"
@@ -57,8 +62,7 @@ export default {
   methods: {
     sendInvoice() {
       this.isLoading = true;
-
-      axios.post('http://129.213.89.112:3000/api/AddNfe', JSON.parse(this.invoiceJSON))
+      axios.post('http://10.100.22.118:8080/transportUnit/'+this.transportUnitId+'/invoice', JSON.parse(this.invoiceJSON))
         .then(res => {
           if (res.status === 200) {
             console.log(res);
