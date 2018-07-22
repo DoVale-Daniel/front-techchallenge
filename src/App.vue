@@ -12,9 +12,6 @@
                 <li class="navbar-item">
                   <router-link class="navbar-item" to="/register-transport-unit">Cadastrar Pacote</router-link>
                 </li>
-                <li class="navbar-item">
-                  <router-link class="navbar-item" to="/register-invoice">Cadastrar Nota Fiscal</router-link>
-                </li>
         </ul>
       </div>
     </div>
@@ -29,6 +26,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color:  #EEE;
 }
 #nav {
   padding: 30px;

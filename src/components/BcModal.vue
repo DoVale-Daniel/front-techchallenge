@@ -1,7 +1,7 @@
 <template>
 <section>
   <button class="button is-success"
-            @click="isCardModalActive = true; getDetail();">
+            @click="isCardModalActive = true; sendInvoice();">
             {{label}}
   </button>
   <b-modal :active.sync="isCardModalActive" :width="640" scroll="keep">
@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="content">
-                        {{ this.details}}
+                        {{ this.responseJSON }}
                     </div>
                 </div>
             </div>
@@ -32,23 +32,35 @@ export default {
   },
   data() {
     return {
-      isImageModalActive: false,
-      isCardModalActive: false,
       isLoading: false,
-      details: {}
+      responseJSON: null
     };
   },
   methods: {
-    getDetail() {
+    sendInvoice() {
       this.isLoading = true;
-
+      const invoiceJSON = {
+        "nfe_xml_base64": "PD9waHAKcGhwaW5mbygpOwo=",
+        "nfe_key": "abcIntelipost1"
+      }
       axios
-        .get(`http://129.213.89.112:3000/api/TransportUnit/${this.id}`)
+        .post(
+          "http://10.100.22.118:8080/transportUnit/" +
+            this.id +
+            "/invoice",
+          invoiceJSON
+        )
         .then(res => {
           if (res.status === 200) {
-            this.details = res.data;
-            console.log(this.details);
+            console.log(res);
 
+            this.$toast.open({
+              message: "Nota fiscal inserida com sucesso!",
+              type: "is-success",
+              position: "is-bottom"
+            });
+
+            this.responseJSON = JSON.stringify(res.data);
             this.isLoading = false;
           }
         })
@@ -56,7 +68,7 @@ export default {
           console.log(e);
 
           this.$toast.open({
-            message: "Não foi possivel listar os detalhes desse Transport Unit",
+            message: "Não foi possivel inserir a nota fiscal.",
             type: "is-danger",
             position: "is-bottom"
           });
