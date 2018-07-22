@@ -41,7 +41,10 @@
           </b-table-column>
 
           <b-table-column field="actions" label="Ações">
-            <button class="button is-primary">Detalhes</button>
+            <bc-modal
+              :label="'Detalhes'"
+              :id="props.row.id">
+            </bc-modal>
           </b-table-column>
 
         </template>
@@ -57,6 +60,7 @@ import moment from "moment";
 
 import BcField from "@/components/BcField.vue";
 import BcPageBase from "@/components/BcPageBase.vue";
+import BcModal from "@/components/BcModal.vue";
 
 export default {
   name: "PageRegisterTransportUnit",
@@ -76,8 +80,7 @@ export default {
     sendTransportUnit() {
       this.isLoading = true;
 
-
-      axios.get('http://10.100.22.118:8080/transportUnit')
+      axios.get('http://129.213.89.112:3000/api/CreateTransportUnit')
         .then(res => {
           if (res.status === 200) {
             console.log(res);
@@ -112,7 +115,8 @@ export default {
   },
   components: {
     BcField,
-    BcPageBase
+    BcPageBase,
+    BcModal
   },
   filters: {
     date: (date) => {
