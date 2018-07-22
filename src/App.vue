@@ -3,13 +3,13 @@
     <div id="navbar">
       <ul class="navbar-menu">
         <li class="navbar-item">
-          <router-link class="navbar-item" to="/">Entregas</router-link>
+          <router-link class="navbar-item" to="/">Pacotes</router-link>
         </li>
         <li class="navbar-item">
-          <router-link class="navbar-item" to="/register-transport-unit">Cadastrar Entregas</router-link>
+          <router-link class="navbar-item" to="/register-transport-unit">Cadastrar Pacote</router-link>
         </li>
         <li class="navbar-item">
-          <router-link class="navbar-item" to="/register-invoice">Cadastrar Notas Fiscais </router-link>
+          <router-link class="navbar-item" to="/register-invoice">Cadastrar Nota Fiscal</router-link>
         </li>
       </ul>
     </div>

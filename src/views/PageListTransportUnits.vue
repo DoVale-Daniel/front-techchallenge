@@ -1,6 +1,6 @@
 <template>
   <BcPageBase 
-    title="Lista de Entregas"
+    title="Lista de Pacotes"
     class="page page-home">
 
     <b-field grouped group-multiline>
@@ -76,8 +76,8 @@ export default {
     sendTransportUnit() {
       this.isLoading = true;
 
-      axios
-        .get("http://129.213.89.112:3000/api/CreateTransportUnit")
+
+      axios.get('http://10.100.22.118:8080/transportUnit')
         .then(res => {
           if (res.status === 200) {
             console.log(res);
@@ -98,9 +98,9 @@ export default {
           console.log(e);
 
           this.$toast.open({
-            message: "Não foi possivel cadastrar o seu pacote",
-            type: "is-danger",
-            position: "is-bottom"
+            message: 'Não foi possivel listar os Transport Units',
+            type: 'is-danger',
+            position: 'is-bottom',
           });
 
           this.isLoading = false;

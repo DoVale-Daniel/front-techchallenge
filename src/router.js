@@ -10,12 +10,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Lista de Entregas',
+      name: 'Lista de Pacote',
       component: PageListTransportUnits,
     },
     {
       path: '/register-transport-unit',
-      name: 'Cadastrar Entregas',
+      name: 'Cadastrar Pacote',
       component: PageRegisterTransportUnit,
     },
     {
