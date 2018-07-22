@@ -1,6 +1,6 @@
 <template>
   <BcPageBase 
-    title="Cadastrar Notas Fiscais"
+    title="Cadastrar Nota Fiscal"
     class="page page-home">
 
     <template slot="content">
@@ -64,7 +64,7 @@ export default {
             console.log(res);
 
             this.$toast.open({
-              message: 'Pacote cadastrado com sucesso!',
+              message: 'Nota fiscal inserida com sucesso!',
               type: 'is-success',
               position: 'is-bottom',
             });
@@ -77,7 +77,7 @@ export default {
           console.log(e);
 
           this.$toast.open({
-            message: 'Não foi possivel cadastrar o seu pacote',
+            message: 'Não foi possivel inserir a nota fiscal.',
             type: 'is-danger',
             position: 'is-bottom',
           });

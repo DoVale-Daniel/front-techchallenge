@@ -1,11 +1,11 @@
 <template>
   <BcPageBase 
-    title="Cadastrar Entregas"
+    title="Cadastrar Pacote"
     class="page page-home">
 
     <template slot="content">
       <form class="form">
-        <b-field label="Dados da Entrega:">
+        <b-field label="Dados do Pacote:">
           <b-input 
             type="textarea"
             v-model="transportUnitJSON" />
@@ -25,7 +25,7 @@
         <b-field 
           v-if="!!responseJSON"
           label="Resposta">
-          <b-field label="Dados da Entrega:">
+          <b-field label="Dados do Pacote:">
             <b-input 
               type="textarea"
               v-model="responseJSON" 
@@ -58,7 +58,7 @@ export default {
     sendTransportUnit() {
       this.isLoading = true;
 
-      axios.post('http://129.213.89.112:3000/api/CreateTransportUnit', JSON.parse(this.transportUnitJSON))
+      axios.post('http://10.100.22.118:8080/transportUnit', JSON.parse(this.transportUnitJSON))
         .then(res => {
           if (res.status === 200) {
             console.log(res);
